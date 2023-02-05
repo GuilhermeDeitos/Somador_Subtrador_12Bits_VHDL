@@ -4,96 +4,125 @@ ENTITY tb_somadorSubtrator IS
 END tb_somadorSubtrator;
 
 ARCHITECTURE arch OF tb_somadorSubtrator IS
-
     COMPONENT mux2x12
-    port(
-        c0: in std_logic_vector(11 downto 0);
-        c1: in std_logic_vector(11 downto 0);
-        sel: in std_logic;
-        Z: out std_logic_vector(11 downto 0);
-        overflow: out std_logic
-    );
+        PORT (
+            c0 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+            c1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+            sel : IN STD_LOGIC;
+            Z : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
+        );
     END COMPONENT;
 
     COMPONENT somador12bits
         PORT (
-            X, Y : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-            cin : IN STD_LOGIC;
-            Z : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
-            cout : OUT STD_LOGIC
+            word_X, word_Y : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+            cin_Add : IN STD_LOGIC;
+            result_add : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+            cout_Add : OUT STD_LOGIC
         );
     END COMPONENT;
 
     COMPONENT subtrator12bits
         PORT (
-            a : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-            b : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-            cin1 : IN STD_LOGIC;
-            s : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
-            cout1 : OUT STD_LOGIC
+            word_A, word_B : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+            result_subtraction : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+            cin_Sub : IN STD_LOGIC;
+            cout_Sub : OUT STD_LOGIC
         );
     END COMPONENT;
 
-    --Signal Somador
-    SIGNAL x, y, z1 : STD_LOGIC_VECTOR(11 DOWNTO 0);
-    SIGNAL cin, cout : STD_LOGIC;
+    COMPONENT verifyOverflow
+        PORT (
+            wordInX, wordInY, wordOut : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+            overflow : OUT STD_LOGIC
+        );
+    END COMPONENT;
 
-    --Signal Subtrator
-    SIGNAL a, b, s : STD_LOGIC_VECTOR(11 DOWNTO 0);
-    SIGNAL cin1, cout1 : STD_LOGIC;
-
-    --Signal Mux
-    SIGNAL sel : STD_LOGIC;
-    SIGNAL z : STD_LOGIC_VECTOR(11 DOWNTO 0);
-    SIGNAL overflow : STD_LOGIC;
+    SIGNAL sWord_X, sWord_Y, sZ : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL sResult_add, sResult_subtraction : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL sCin_geral, sCout_geral : STD_LOGIC;
+    SIGNAL sOverflow : STD_LOGIC;
+    SIGNAL sSel : STD_LOGIC;
 
 BEGIN
-    --Instancia Somador
-    u_somador12bits : somador12bits PORT MAP(
-        x,
-        y,
-        cin,
-        z1,
-        cout
-    );
-
-    --Instancia Subtrator
-    u_subtrator12bits : subtrator12bits PORT MAP(
-        a,
-        b,
-        cin1,
-        s,
-        cout1
-    );
-
-    --Instancia Mux
     u_mux2x12 : mux2x12 PORT MAP(
-        x,
-        y,
-        sel,
-        z,
-        overflow
+        sResult_add,
+        sResult_subtraction,
+        sSel,
+        sZ
     );
+
+    u_somador12bits : somador12bits PORT MAP(
+        sWord_X,
+        sWord_Y,
+        sCin_geral,
+        sResult_add,
+        sCout_geral
+    );
+
+    u_subtrator12bits : subtrator12bits PORT MAP(
+        sWord_X,
+        sWord_Y,
+        sResult_subtraction,
+        sCin_geral,
+        sCout_geral
+    );
+
+    u_verifyOverflow : verifyOverflow PORT MAP(
+        sWord_X,
+        sWord_Y,
+        sZ,
+        sOverflow
+
+    );
+
     u_teste : PROCESS
     BEGIN
-
-        --Teste Somador
-        x <= "000000000000";
-        y <= "111111111111";
-        cin <= '0';
-        sel <= '0';
-        z <= z1;
-        overflow <= cout;
+        sWord_X <= x"000";
+        sWord_Y <= x"FFF";
+        sCin_geral <= '0';
+        sSel <= '0';
         WAIT FOR 4 ns;
 
-        --Teste Subtrator
-        a <= "000000000000";
-        b <= "111111111111";
-        cin1 <= '0';
-        sel <= '1';
-        z <= s;
-        overflow <= cout1;
+        sWord_X <= x"000";
+        sWord_Y <= x"FFF";
+        sCin_geral <= '0';
+        sSel <= '1';
+        WAIT FOR 4 ns;
+
+        sWord_X <= x"FFF";
+        sWord_Y <= x"001";
+        sCin_geral <= '0';
+        sSel <= '0';
+        WAIT FOR 4 ns;
+
+        sWord_X <= x"FFF";
+        sWord_Y <= x"001";
+        sCin_geral <= '0';
+        sSel <= '1';
+
+        WAIT FOR 4 ns;
+
+        sWord_X <= x"FFE";
+        sWord_Y <= x"FFE";
+        sCin_geral <= '0';
+        sSel <= '0';
+        WAIT FOR 4 ns;
+
+        sWord_X <= x"0FF";
+        sWord_Y <= x"0FF";
+        sCin_geral <= '0';
+        sSel <= '0';
+        WAIT FOR 4 ns;
+
+
+        sWord_X <= x"10F";
+        sWord_Y <= x"1FF";
+        sCin_geral <= '0';
+        sSel <= '1';
         WAIT FOR 4 ns;
         WAIT;
+
     END PROCESS;
+
 END arch; -- arch

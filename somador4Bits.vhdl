@@ -20,25 +20,25 @@ architecture soma of somador4Bits is
     );
     end component;
 
-    signal carry: std_logic_vector(2 downto 0);
-    signal coutVet: std_logic_vector(3 downto 0);
+    signal sCarry4bits: std_logic_vector(2 downto 0);
+    signal sCoutVet4bits: std_logic_vector(3 downto 0);
 begin
     u_somador1: somador port map(
-        A1(0),B1(0),cin1,S1(0),coutVet(0)
+        A1(0),B1(0),cin1,S1(0),sCoutVet4bits(0)
     );
-    carry(0) <= coutVet(0);
+    sCarry4bits(0) <= sCoutVet4bits(0);
     
     u_somador2: somador port map(
-        A1(1),B1(1),carry(0),S1(1),coutVet(1)
+        A1(1),B1(1),sCarry4bits(0),S1(1),sCoutVet4bits(1)
     );
-    carry(1) <= coutVet(1);
+    sCarry4bits(1) <= sCoutVet4bits(1);
     u_somador3: somador port map(
-        A1(2),B1(2),carry(1),S1(2),coutVet(2)
+        A1(2),B1(2),sCarry4bits(1),S1(2),sCoutVet4bits(2)
     );
-    carry(2) <= coutVet(2);
+    sCarry4bits(2) <= sCoutVet4bits(2);
     u_somador4: somador port map(
-        A1(3),B1(3),carry(2),S1(3),coutVet(3)
+        A1(3),B1(3),sCarry4bits(2),S1(3),sCoutVet4bits(3)
     );
 
-    cout1 <= coutVet(3);
+    cout1 <= sCoutVet4bits(3);
 end soma;

@@ -7,8 +7,7 @@ entity mux2x12 is
         c0: in std_logic_vector(11 downto 0);
         c1: in std_logic_vector(11 downto 0);
         sel: in std_logic;
-        Z: out std_logic_vector(11 downto 0);
-        overflow: out std_logic
+        Z: out std_logic_vector(11 downto 0)
     );
 end entity;
 
@@ -17,5 +16,6 @@ begin
     -- atribuição condicional
     Z <= c0 when sel = '0' else
          c1 when sel = '1' else "ZZZZZZZZZZZZ"; 
+
 
 end architecture;

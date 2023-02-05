@@ -1,19 +1,22 @@
-v 3
-file . "tb_somadorSubtrador.vhdl" "20230205191104.000" "20230205161106.687":
-  entity tb_somadorsubtrator at 1( 0) + 0 on 105;
-  architecture arch of tb_somadorsubtrator at 6( 104) + 0 on 106;
-file . "subtrador.vhdl" "20230205190334.000" "20230205161106.686":
-  entity subtrator12bits at 1( 0) + 0 on 103;
-  architecture subtrator of subtrator12bits at 13( 258) + 0 on 104;
-file . "somador4Bits.vhdl" "20230205185030.000" "20230205161106.685":
-  entity somador4bits at 1( 0) + 0 on 101;
-  architecture soma of somador4bits at 13( 267) + 0 on 102;
-file . "somador12Bits.vhdl" "20230205190254.000" "20230205161106.685":
-  entity somador12bits at 1( 0) + 0 on 99;
-  architecture soma of somador12bits at 13( 266) + 0 on 100;
-file . "somador.vhdl" "20230205183056.000" "20230205161106.684":
-  entity somador at 1( 0) + 0 on 97;
-  architecture soma of somador at 13( 214) + 0 on 98;
-file . "mux2x12.vhdl" "20230205182612.000" "20230205161106.684":
-  entity mux2x12 at 2( 53) + 0 on 95;
-  architecture comutar of mux2x12 at 15( 355) + 0 on 96;
+v 4
+file . "mux2x12.vhdl" "a9167caf89e6e0498e3526b38afed206774d6625" "20230205223538.418":
+  entity mux2x12 at 2( 53) + 0 on 165;
+  architecture comutar of mux2x12 at 14( 321) + 0 on 166;
+file . "overflow.vhdl" "52d26101fdfd2e3cc4c4f0613e91dae0635897ec" "20230205223538.422":
+  entity verifyoverflow at 1( 0) + 0 on 167;
+  architecture verify of verifyoverflow at 11( 221) + 0 on 168;
+file . "somador.vhdl" "541e1ef5b47f6041e925c8edbc87ceca4d0f8457" "20230205223538.428":
+  entity somador at 1( 0) + 0 on 169;
+  architecture soma of somador at 13( 214) + 0 on 170;
+file . "somador12Bits.vhdl" "790e0af47642a55f42a2288ed2a0dea3e3045d1d" "20230205223538.433":
+  entity somador12bits at 1( 0) + 0 on 171;
+  architecture soma of somador12bits at 13( 298) + 0 on 172;
+file . "somador4Bits.vhdl" "45fd0d430cbfbb306de2bf7e99a29fb791f4e24e" "20230205223538.438":
+  entity somador4bits at 1( 0) + 0 on 173;
+  architecture soma of somador4bits at 13( 267) + 0 on 174;
+file . "subtrador.vhdl" "e43e287f1f6ec8fc15610a8fffcc2b5c03b9d490" "20230205223538.442":
+  entity subtrator12bits at 1( 0) + 0 on 175;
+  architecture subtrator of subtrator12bits at 13( 290) + 0 on 176;
+file . "tb_somadorSubtrador.vhdl" "03da29a67603d364d4ed9cc77efcbc7cfd185bfe" "20230205223538.446":
+  entity tb_somadorsubtrator at 1( 0) + 0 on 177;
+  architecture arch of tb_somadorsubtrator at 6( 104) + 0 on 178;

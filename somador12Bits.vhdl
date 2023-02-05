@@ -1,37 +1,37 @@
-library ieee;
-use ieee.std_logic_1164.all; 
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
 
-entity somador12Bits is
-    port(
-        X,Y: in std_logic_vector(11 downto 0);
-        cin: in std_logic;
-        Z: out std_logic_vector(11 downto 0);
-        cout: out std_logic
+ENTITY somador12Bits IS
+    PORT (
+        word_X, word_Y : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+        cin_Add : IN STD_LOGIC;
+        result_add : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+        cout_Add : OUT STD_LOGIC
     );
-end somador12Bits;
+END somador12Bits;
 
-architecture soma of somador12Bits is
-    component somador4Bits port(
-        A1,B1: in std_logic_vector(3 downto 0);
-        cin1: in std_logic;
-        S1: out std_logic_vector(3 downto 0);
-        cout1: out std_logic
-    );
-    end component;
+ARCHITECTURE soma OF somador12Bits IS
+    COMPONENT somador4Bits PORT (
+        A1, B1 : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+        cin1 : IN STD_LOGIC;
+        S1 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+        cout1 : OUT STD_LOGIC
+        );
+    END COMPONENT;
 
-    signal coutVetor: std_logic_vector(2 downto 0);
-    signal carry: std_logic_vector(1 downto 0);
-begin
-    u_somador1: somador4Bits port map(
-        X(3 downto 0),Y(3 downto 0),cin,Z(3 downto 0),coutVetor(0)
+    SIGNAL sCout12Bits : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL sCarry12Bits : STD_LOGIC_VECTOR(1 DOWNTO 0);
+BEGIN
+    u_somador1 : somador4Bits PORT MAP(
+        word_X(3 DOWNTO 0), word_Y(3 DOWNTO 0), cin_Add, result_add(3 DOWNTO 0), sCout12Bits(0)
     );
-    carry(0) <= coutVetor(0);
-    u_somador2: somador4Bits port map(
-        X(7 downto 4),Y(7 downto 4),carry(0),Z(7 downto 4),coutVetor(1)
+    sCarry12Bits(0) <= sCout12Bits(0);
+    u_somador2 : somador4Bits PORT MAP(
+        word_X(7 DOWNTO 4), word_Y(7 DOWNTO 4), sCarry12Bits(0), result_add(7 DOWNTO 4), sCout12Bits(1)
     );
-    carry(1) <= coutVetor(1);
-    u_somador3: somador4Bits port map(
-        X(11 downto 8),Y(11 downto 8),carry(1),Z(11 downto 8),coutVetor(2)
+    sCarry12Bits(1) <= sCout12Bits(1);
+    u_somador3 : somador4Bits PORT MAP(
+        word_X(11 DOWNTO 8), word_Y(11 DOWNTO 8), sCarry12Bits(1), result_add(11 DOWNTO 8), sCout12Bits(2)
     );
-    cout <= coutVetor(2);
-end soma;
+    cout_Add <= sCout12Bits(2);
+END soma;
