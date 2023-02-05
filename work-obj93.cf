@@ -1,4 +1,7 @@
 v 3
+file . ".\somador.vhdl" "20230205183056.000" "20230205153058.736":
+  entity somador at 1( 0) + 0 on 17;
+  architecture soma of somador at 13( 214) + 0 on 18;
 file . ".\tb_somadorSubtrador.vhdl" "20230123191716.000" "20230123161717.557":
   entity tb_somadorsubtrator at 1( 0) + 0 on 11;
   architecture arch of tb_somadorsubtrator at 8( 109) + 0 on 12;

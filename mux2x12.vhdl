@@ -12,7 +12,7 @@ entity mux2x12 is
     );
 end entity;
 
-architecture comutar of mux2x6 is
+architecture comutar of mux2x12 is
 begin
     -- atribuição condicional
     Z <= c0 when sel = '0' else
