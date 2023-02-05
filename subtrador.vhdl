@@ -11,26 +11,28 @@ entity subtrator12Bits is
 end subtrator12Bits;
 
 architecture subtrator of subtrator12Bits is
-    component somador is
-        port (
-          X,Y: in std_logic_vector(11 downto 0);
-          cin: in std_logic;
-          Z: out std_logic_vector(11 downto 0);
-          cout: out std_logic
-        );
-    end component somador;
-    signal A1, B1: std_logic_vector(11 downto 0);
+    component somador12Bits is
+      port(
+        X,Y: in std_logic_vector(11 downto 0);
+        cin: in std_logic;
+        Z: out std_logic_vector(11 downto 0);
+        cout: out std_logic
+    );
+    end component somador12Bits;
+    signal A1, B1, S1: std_logic_vector(11 downto 0);
+    signal aux_cin, aux_cout: std_logic;
+    signal negative_B: std_logic_vector(11 downto 0);
 begin
 
     A1 <= not(B);
     B1 <= "000000000001";
 
-    somador12Bits: somador port map (Z => A, Y => B, S => S, cin => cin1, cout => cout1);
+    u_conversao: somador12Bits port map (A1, B1, cin1, S1, aux_cout);
 
-    B <= S1;
+    negative_B <= S1;
 
-    cin <= cout1;
+    aux_cin <= aux_cout;
 
-    somador12Bits2: somador port map (A, B, S, cin, cout);
+    u_subtracao: somador12Bits port map (A, negative_B, aux_cin, S, cout1);
 
 end subtrator ; -- subtrator

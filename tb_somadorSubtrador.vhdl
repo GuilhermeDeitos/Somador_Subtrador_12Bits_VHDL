@@ -1,48 +1,45 @@
-library ieee;
-use ieee.std_logic_1164.all; 
-
-
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
 ENTITY tb_somadorSubtrator IS
 END tb_somadorSubtrator;
 
 ARCHITECTURE arch OF tb_somadorSubtrator IS
 
     COMPONENT mux2x12
-        PORT (
-            a : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-            b : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-            sel : IN STD_LOGIC;
-            z : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
-            overflow : OUT STD_LOGIC
-        );
+    port(
+        c0: in std_logic_vector(11 downto 0);
+        c1: in std_logic_vector(11 downto 0);
+        sel: in std_logic;
+        Z: out std_logic_vector(11 downto 0);
+        overflow: out std_logic
+    );
     END COMPONENT;
 
     COMPONENT somador12bits
         PORT (
-            a : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-            b : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+            X, Y : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
             cin : IN STD_LOGIC;
-            s : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+            Z : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
             cout : OUT STD_LOGIC
         );
     END COMPONENT;
 
     COMPONENT subtrator12bits
         PORT (
-            a1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-            b1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+            a : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+            b : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
             cin1 : IN STD_LOGIC;
-            s1 : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+            s : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
             cout1 : OUT STD_LOGIC
         );
     END COMPONENT;
 
     --Signal Somador
-    SIGNAL a, b, s : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL x, y, z1 : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL cin, cout : STD_LOGIC;
 
     --Signal Subtrator
-    SIGNAL a1, b1, s1 : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL a, b, s : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL cin1, cout1 : STD_LOGIC;
 
     --Signal Mux
@@ -53,52 +50,50 @@ ARCHITECTURE arch OF tb_somadorSubtrator IS
 BEGIN
     --Instancia Somador
     u_somador12bits : somador12bits PORT MAP(
-        a,
-        b,
+        x,
+        y,
         cin,
-        s,
+        z1,
         cout
     );
 
     --Instancia Subtrator
     u_subtrator12bits : subtrator12bits PORT MAP(
-        a1,
-        b1,
+        a,
+        b,
         cin1,
-        s1,
+        s,
         cout1
     );
 
     --Instancia Mux
     u_mux2x12 : mux2x12 PORT MAP(
-        a,
-        b,
+        x,
+        y,
         sel,
         z,
         overflow
     );
-    u_teste: process
-    begin
+    u_teste : PROCESS
+    BEGIN
 
         --Teste Somador
-        a <= "000000000000";
-        b <= "111111111111";
+        x <= "000000000000";
+        y <= "111111111111";
         cin <= '0';
         sel <= '0';
-        z <= s;
+        z <= z1;
         overflow <= cout;
-        wait for 4 ns;
+        WAIT FOR 4 ns;
 
         --Teste Subtrator
-        a1 <= "000000000000";
-        b1 <= "111111111111";
+        a <= "000000000000";
+        b <= "111111111111";
         cin1 <= '0';
         sel <= '1';
-        z <= s1;
+        z <= s;
         overflow <= cout1;
-        wait for 4 ns;
-        wait;
-    end process;
-
-
+        WAIT FOR 4 ns;
+        WAIT;
+    END PROCESS;
 END arch; -- arch
