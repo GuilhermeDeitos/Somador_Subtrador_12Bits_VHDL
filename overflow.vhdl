@@ -10,5 +10,5 @@ END verifyOverflow;
 
 ARCHITECTURE verify OF verifyOverflow IS
 BEGIN
-    overflow <= (NOT(wordOut(11)) AND (wordInX(11) OR wordInY(11))) OR (wordInX(11) AND wordInY(11));
+    overflow <= '1' WHEN (wordInX(11) = wordInY(11) AND wordInX(11) /= wordOut(11)) ELSE '0';
 END verify;

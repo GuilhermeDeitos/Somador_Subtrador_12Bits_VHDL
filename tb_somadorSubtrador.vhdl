@@ -82,45 +82,45 @@ BEGIN
         sWord_Y <= x"FFF";
         sCin_geral <= '0';
         sSel <= '0';
-        WAIT FOR 4 ns;
+        WAIT FOR 193 ns;
 
         sWord_X <= x"000";
         sWord_Y <= x"FFF";
         sCin_geral <= '0';
         sSel <= '1';
-        WAIT FOR 4 ns;
+        WAIT FOR 193 ns;
 
         sWord_X <= x"FFF";
         sWord_Y <= x"001";
         sCin_geral <= '0';
         sSel <= '0';
-        WAIT FOR 4 ns;
+        WAIT FOR 193 ns;
 
         sWord_X <= x"FFF";
         sWord_Y <= x"001";
         sCin_geral <= '0';
         sSel <= '1';
 
-        WAIT FOR 4 ns;
+        WAIT FOR 193 ns;
 
         sWord_X <= x"FFE";
         sWord_Y <= x"FFE";
         sCin_geral <= '0';
         sSel <= '0';
-        WAIT FOR 4 ns;
+        WAIT FOR 193 ns;
 
         sWord_X <= x"0FF";
         sWord_Y <= x"0FF";
         sCin_geral <= '0';
         sSel <= '0';
-        WAIT FOR 4 ns;
+        WAIT FOR 193 ns;
 
 
         sWord_X <= x"10F";
         sWord_Y <= x"1FF";
         sCin_geral <= '0';
         sSel <= '1';
-        WAIT FOR 4 ns;
+        WAIT FOR 193 ns;
         WAIT;
 
     END PROCESS;
